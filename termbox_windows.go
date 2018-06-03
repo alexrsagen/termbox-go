@@ -672,6 +672,10 @@ func key_event_record_to_event(r *key_event_record) (Event, bool) {
 		}
 	}
 
+	if r.unicode_char != 0 {
+		e.Ch = rune(r.unicode_char)
+	}
+
 	ctrlpressed := r.control_key_state&(left_ctrl_pressed|right_ctrl_pressed) != 0
 
 	if r.virtual_key_code >= vk_f1 && r.virtual_key_code <= vk_f12 {
@@ -800,7 +804,6 @@ func key_event_record_to_event(r *key_event_record) (Event, bool) {
 	}
 
 	if r.unicode_char != 0 {
-		e.Ch = rune(r.unicode_char)
 		return e, true
 	}
 
